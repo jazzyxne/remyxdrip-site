@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReMyx Drip | Custom Apparel. Real Craft.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;600;700&family=Sora:wght@400;600;700&family=Poppins:wght@300;400&family=Barlow+Condensed:ital,wght@0,700;0,900;1,900&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ── */
+:root {
+  --navy:       #0e0d2c;
+  --navy-mid:   #13124a;
+  --navy-light: #1a1845;
+  --orange:     #e86e2f;
+  --orange-dim: rgba(232,110,47,0.12);
+  --white:      #fcfcfc;
+  --periwinkle: #7b78f9;
+  --peri-dim:   rgba(123,120,249,0.12);
+  --teal:       #39c4a3;
+  --yellow:     #ffd05c;
+  --text-muted: rgba(252,252,252,0.55);
+  --border:     rgba(123,120,249,0.15);
+  --border-orange: rgba(232,110,47,0.25);
+}
+
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--navy);
+  color: var(--white);
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+img { display: block; max-width: 100%; }
+
+/* ── UTILITY ── */
+.eyebrow {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--teal);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 2px;
+  background: var(--teal);
+  flex-shrink: 0;
+}
+.section-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  line-height: 1;
+  letter-spacing: -0.5px;
+}
+.accent-orange { color: var(--orange); }
+.accent-peri   { color: var(--periwinkle); }
+.accent-teal   { color: var(--teal); }
+.accent-yellow { color: var(--yellow); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Sora', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.btn-solid {
+  background: var(--orange);
+  color: var(--white);
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+.btn-solid:hover { background: var(--periwinkle); transform: translateY(-2px); }
+.btn-outline {
+  background: transparent;
+  color: var(--white);
+  border: 1px solid rgba(252,252,252,0.25);
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+.btn-outline:hover { border-color: var(--orange); color: var(--orange); transform: translateY(-2px); }
+
+/* fade in on scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── ANNOUNCEMENT BANNER ── */
+.banner {
+  width: 100%;
+  background: var(--orange);
+  padding: 9px 24px;
+  text-align: center;
+  font-family: 'Sora', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--white);
+  position: relative;
+  z-index: 1001;
+}
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 4%;
+  background: rgba(14,13,44,0.96);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  gap: 16px;
+}
+.nav-logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 1.5rem;
+  letter-spacing: 3px;
+  color: var(--white);
+}
+.nav-logo span { color: var(--orange); }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  list-style: none;
+  flex-shrink: 0;
+}
+.nav-links a {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  position: relative;
+  transition: color 0.25s;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--orange);
+  transition: width 0.25s;
+}
+.nav-links a:hover::after { width: 100%; }
+.nav-links .nav-cta {
+  background: var(--orange);
+  color: var(--white);
+  padding: 9px 20px;
+  font-size: 0.7rem;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  transition: background 0.25s;
+}
+.nav-links .nav-cta:hover { background: var(--periwinkle); color: var(--white); }
+.nav-links .nav-cta::after { display: none; }
+
+/* floating back-to-top */
+.back-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 2000;
+  font-family: 'Sora', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 12px 18px;
+  background: rgba(14,13,44,0.92);
+  color: var(--white);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, border-color 0.25s, color 0.25s;
+}
+.back-top:hover { border-color: var(--orange); color: var(--orange); }
+.back-top.visible { opacity: 1; pointer-events: all; }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 0 6%;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--navy);
+  z-index: 0;
+}
+/* diagonal orange slash — the signature element */
+.hero-slash {
+  position: absolute;
+  top: -10%;
+  right: -5%;
+  width: 55%;
+  height: 120%;
+  background: linear-gradient(135deg, transparent 0%, rgba(232,110,47,0.06) 40%, rgba(123,120,249,0.04) 100%);
+  transform: skewX(-8deg);
+  z-index: 1;
+  pointer-events: none;
+}
+.hero-slash::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, var(--orange), transparent);
+  opacity: 0.5;
+}
+/* subtle grid */
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(123,120,249,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(123,120,249,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  z-index: 1;
+  pointer-events: none;
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+  animation: heroIn 1s cubic-bezier(0.16,1,0.3,1) both;
+  animation-delay: 0.2s;
+}
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-eyebrow {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 32px;
+  height: 2px;
+  background: var(--teal);
+}
+.hero-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: clamp(4.5rem, 11vw, 9.5rem);
+  line-height: 0.88;
+  letter-spacing: -2px;
+  margin-bottom: 24px;
+}
+.hero-title .outline {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--orange);
+}
+.hero-body {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(0.88rem, 1.4vw, 1rem);
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--text-muted);
+  max-width: 480px;
+  margin-bottom: 40px;
+}
+.hero-body strong { color: var(--white); font-weight: 600; }
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+/* ── DIVIDER ── */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+/* ── SERVICES INTRO ── */
+#services-intro {
+  padding: 100px 6%;
+  background: var(--navy);
+}
+.intro-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.intro-left .section-title { margin-bottom: 20px; }
+.intro-left p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.9;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+.intro-left p strong { color: var(--white); font-weight: 600; }
+.intro-right {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+.intro-stat {
+  background: var(--navy-light);
+  border: 1px solid var(--border);
+  padding: 32px 24px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.25s;
+}
+.intro-stat:hover { border-color: var(--border-orange); }
+.intro-stat::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+.intro-stat:hover::before { transform: scaleX(1); }
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  color: var(--orange);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+/* ── WHO WE SERVE ── */
+#who-we-serve {
+  padding: 100px 6%;
+  background: var(--navy-mid);
+}
+.serve-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+.serve-header .eyebrow { justify-content: center; }
+.serve-header .eyebrow::before { display: none; }
+.serve-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.serve-card {
+  background: var(--navy);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.serve-card:hover {
+  border-color: var(--border-orange);
+  transform: translateY(-4px);
+}
+.serve-card-text {
+  padding: 48px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+}
+.serve-card-label {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+.serve-card-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 1.9rem;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+.serve-card-body {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.84rem;
+  line-height: 1.75;
+  color: var(--text-muted);
+}
+.serve-card-img {
+  background: var(--navy-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  position: relative;
+  overflow: hidden;
+}
+.img-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  opacity: 0.3;
+}
+.img-placeholder-icon { font-size: 2.8rem; }
+.img-placeholder-text {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--white);
+}
+/* color bar on each card */
+.serve-card.individuals .serve-card-img::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--orange), var(--yellow));
+}
+.serve-card.business .serve-card-img::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--periwinkle), var(--teal));
+}
+
+/* ── WHAT WE PUT IT ON ── */
+#apparel {
+  padding: 100px 6%;
+  background: var(--navy);
+}
+.apparel-inner {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 80px;
+  align-items: start;
+}
+.apparel-left .section-title { margin-bottom: 20px; }
+.apparel-left p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.88rem;
+  line-height: 1.8;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+}
+.apparel-note {
+  background: var(--orange-dim);
+  border-left: 3px solid var(--orange);
+  padding: 14px 18px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 300;
+  color: rgba(252,252,252,0.75);
+  line-height: 1.6;
+}
+.apparel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.apparel-item {
+  background: var(--navy-light);
+  border: 1px solid var(--border);
+  padding: 24px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: border-color 0.25s, background 0.25s;
+}
+.apparel-item:hover {
+  border-color: var(--border-orange);
+  background: var(--orange-dim);
+}
+.apparel-item-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+.apparel-item-name {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--white);
+}
+.apparel-item-note {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ── CUSTOM GIFTS ── */
+#custom-gifts {
+  padding: 80px 6%;
+  background: var(--navy-mid);
+  position: relative;
+  overflow: hidden;
+}
+#custom-gifts::before {
+  content: 'GIFTS';
+  position: absolute;
+  right: 3%;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 16vw;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(123,120,249,0.06);
+  pointer-events: none;
+  line-height: 1;
+  user-select: none;
+}
+.gifts-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+.gifts-left .section-title { margin-bottom: 16px; }
+.gifts-left p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.85;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+.gifts-left p strong { color: var(--white); font-weight: 600; }
+.gifts-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Sora', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--yellow);
+  padding: 8px 16px;
+  border: 1px solid rgba(255,208,92,0.3);
+  background: rgba(255,208,92,0.07);
+}
+.gifts-right {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.gift-card {
+  background: var(--navy);
+  border: 1px solid var(--border);
+  padding: 32px 24px;
+  text-align: center;
+  transition: border-color 0.25s, transform 0.25s;
+}
+.gift-card:hover {
+  border-color: rgba(255,208,92,0.35);
+  transform: translateY(-3px);
+}
+.gift-icon { font-size: 2.2rem; margin-bottom: 12px; }
+.gift-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.gift-desc {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ── OUR WORK ── */
+#our-work {
+  padding: 100px 6%;
+  background: var(--navy);
+}
+.work-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.work-item {
+  aspect-ratio: 1;
+  background: var(--navy-light);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+.work-item:hover { border-color: var(--border-orange); }
+.work-item-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, var(--navy-light), var(--navy-mid));
+  transition: background 0.3s;
+}
+.work-item:hover .work-item-inner {
+  background: linear-gradient(135deg, var(--orange-dim), var(--navy-mid));
+}
+.work-placeholder-icon { font-size: 2.2rem; opacity: 0.2; }
+.work-placeholder-text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 3px;
+  color: rgba(252,252,252,0.2);
+}
+.work-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(14,13,44,0.95) 0%, transparent 55%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.work-item:hover .work-overlay { opacity: 1; }
+.work-overlay-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+}
+.work-overlay-sub {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 300;
+  color: var(--orange);
+  letter-spacing: 2px;
+}
+
+/* ── CONTACT + CTA ── */
+#contact {
+  padding: 100px 6%;
+  background: var(--navy-mid);
+  position: relative;
+  overflow: hidden;
+}
+#contact::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--orange), var(--periwinkle), var(--teal));
+}
+.contact-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.contact-left .section-title { margin-bottom: 20px; }
+.contact-left p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.85;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+}
+.contact-socials {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.social-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: 'Sora', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  transition: color 0.25s;
+}
+.social-row:hover { color: var(--white); }
+.social-platform {
+  font-size: 0.62rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--periwinkle);
+  min-width: 80px;
+}
+.contact-right {
+  background: var(--navy);
+  border: 1px solid var(--border);
+  padding: 56px 48px;
+  position: relative;
+  text-align: center;
+}
+.contact-right::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--orange), var(--periwinkle));
+}
+.cta-icon { font-size: 2.5rem; margin-bottom: 16px; }
+.cta-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 2.4rem;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+  line-height: 1.1;
+}
+.cta-body {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.86rem;
+  line-height: 1.75;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.cta-note {
+  margin-top: 16px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: #080719;
+  padding: 40px 6%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  border-top: 1px solid var(--border);
+}
+.footer-logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 1.3rem;
+  letter-spacing: 3px;
+}
+.footer-logo span { color: var(--orange); }
+.footer-tagline {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  margin-top: 3px;
+}
+.footer-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+  flex-wrap: wrap;
+}
+.footer-links a {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color 0.25s;
+}
+.footer-links a:hover { color: var(--orange); }
+.footer-copy {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 300;
+  color: rgba(252,252,252,0.2);
+}
+
+/* ── RESPONSIVE ── */
+
+/* Tablet landscape (960px - 1200px) */
+@media (max-width: 1200px) {
+  .nav-links { gap: 18px; }
+  .nav-links a { font-size: 0.65rem; }
+  .intro-inner { gap: 48px; }
+  .apparel-inner { gap: 48px; }
+  .contact-inner { gap: 48px; }
+}
+
+/* Tablet portrait (600px - 960px) */
+@media (max-width: 960px) {
+  nav { padding: 14px 4%; }
+  .nav-links { gap: 16px; }
+  .nav-links a { font-size: 0.62rem; letter-spacing: 1.5px; }
+  .nav-links .nav-cta { padding: 8px 14px; font-size: 0.62rem; }
+
+  .intro-inner,
+  .apparel-inner,
+  .gifts-inner,
+  .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+
+  .serve-grid { grid-template-columns: 1fr; gap: 20px; }
+  .serve-card { grid-template-columns: 1fr; }
+  .serve-card-img { min-height: 200px; }
+  .serve-card-text { padding: 36px 28px; }
+
+  .apparel-grid { grid-template-columns: repeat(2, 1fr); }
+  .intro-right { grid-template-columns: repeat(2, 1fr); }
+
+  .work-grid { grid-template-columns: repeat(2, 1fr); }
+  .work-grid .work-item:last-child { display: none; }
+
+  .gifts-right { grid-template-columns: 1fr 1fr; }
+
+  .contact-right { padding: 36px 28px; }
+
+  footer { flex-direction: column; align-items: flex-start; gap: 24px; }
+
+  #services-intro,
+  #who-we-serve,
+  #apparel,
+  #custom-gifts,
+  #our-work,
+  #contact { padding: 72px 5%; }
+}
+
+/* Mobile (under 600px) */
+@media (max-width: 600px) {
+  nav { padding: 13px 5%; }
+  .nav-links { display: none; }
+  .nav-logo { font-size: 1.2rem; }
+
+  .hero-title { font-size: clamp(3.2rem, 14vw, 4.5rem); }
+  .hero-body { font-size: 0.85rem; }
+  .hero-actions { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .btn { width: 100%; justify-content: center; }
+
+  .apparel-grid { grid-template-columns: 1fr; }
+  .gifts-right { grid-template-columns: 1fr; }
+
+  .work-grid { grid-template-columns: 1fr; }
+  .work-grid .work-item:last-child { display: block; }
+  .work-grid .work-item:nth-child(2) { display: none; }
+
+  .footer-links { display: none; }
+  .back-top { bottom: 20px; right: 16px; }
+
+  #services-intro,
+  #who-we-serve,
+  #apparel,
+  #custom-gifts,
+  #our-work,
+  #contact { padding: 60px 5%; }
+
+  .contact-right { padding: 28px 20px; }
+  .cta-title { font-size: 2rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- BANNER -->
+<div class="banner">Custom orders open — your vision, our craft. Get your quote today.</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">RE<span>MYX</span> DRIP</a>
+  <ul class="nav-links">
+    <li><a href="#services-intro">Services</a></li>
+    <li><a href="#who-we-serve">Who We Serve</a></li>
+    <li><a href="#apparel">Apparel</a></li>
+    <li><a href="#our-work">Our Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="quote.html" class="nav-cta">Get a Quote</a></li>
+  </ul>
+</nav>
+
+<!-- BACK TO TOP -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Top</button>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-slash"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Custom Apparel. Real Craft. No Shortcuts.</div>
+    <h1 class="hero-title">
+      <span class="accent-orange">BE</span> TRUE.<br>
+      <span class="outline">BE YOU.</span>
+    </h1>
+    <p class="hero-body">
+      From a single tee to a full uniform run —
+      <strong>every order is made with intention.</strong>
+      You bring the vision. We make it hit.
+    </p>
+    <div class="hero-actions">
+      <a href="quote.html" class="btn btn-solid">Request a Quote</a>
+      <a href="#our-work" class="btn btn-outline">See Our Work</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ SERVICES INTRO ══ -->
+<section id="services-intro">
+  <div class="intro-inner">
+    <div class="intro-left reveal">
+      <div class="eyebrow">What We Do</div>
+      <h2 class="section-title">We Don't Imitate.<br><span class="accent-orange">We Recreate.</span></h2>
+      <p>ReMyx Drip is a custom apparel brand built on one standard — <strong>originality.</strong> No bulk Etsy graphics. No AI-generated prints sold at a premium. Every design that leaves our shop is crafted with care and made to represent you.</p>
+      <p>Whether it's a single custom piece or a full group run, the approach stays the same. We take your idea, your story, your brand — and we ReMyx it into something worth wearing.</p>
+      <br>
+      <a href="#who-we-serve" class="btn btn-outline">See Who We Work With</a>
+    </div>
+    <div class="intro-right reveal reveal-delay-2">
+      <div class="intro-stat">
+        <div class="stat-num">DTF</div>
+        <div class="stat-label">Direct to Film Printing</div>
+      </div>
+      <div class="intro-stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Original Designs</div>
+      </div>
+      <div class="intro-stat">
+        <div class="stat-num">0</div>
+        <div class="stat-label">Bootlegs. Ever.</div>
+      </div>
+      <div class="intro-stat">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Possibilities</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ WHO WE SERVE ══ -->
+<section id="who-we-serve">
+  <div class="serve-header reveal">
+    <div class="eyebrow">Who We Serve</div>
+    <h2 class="section-title">Custom Apparel for <span class="accent-peri">Every Occasion</span></h2>
+  </div>
+
+  <div class="serve-grid">
+    <!-- Individuals & Families -->
+    <div class="serve-card individuals reveal reveal-delay-1">
+      <div class="serve-card-text">
+        <div class="serve-card-label">Personal Orders</div>
+        <div class="serve-card-title">Individuals <span class="accent-orange">&</span> Families</div>
+        <div class="serve-card-body">From family reunions and birthday celebrations to bridal parties, memorials, and everything in between — we make apparel that fits the moment. Already have a design or logo ready? Even better. We work with what you bring and make it shine. No idea yet? We can help with that too.</div>
+      </div>
+      <div class="serve-card-img">
+        <div class="img-placeholder">
+          <div class="img-placeholder-icon">👨‍👩‍👧‍👦</div>
+          <div class="img-placeholder-text">Photo Coming Soon</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Business & Organizations -->
+    <div class="serve-card business reveal reveal-delay-2">
+      <div class="serve-card-text">
+        <div class="serve-card-label">Professional Orders</div>
+        <div class="serve-card-title">Businesses <span class="accent-peri">&</span> Organizations</div>
+        <div class="serve-card-body">Staff uniforms, branded polos, team gear, church apparel, independent clubs, nonprofits — if your group needs to look unified, we make it happen. Already have a logo? Send it over and we'll handle the rest. We work with businesses of all sizes without the corporate price tag.</div>
+      </div>
+      <div class="serve-card-img">
+        <div class="img-placeholder">
+          <div class="img-placeholder-icon">🏢</div>
+          <div class="img-placeholder-text">Photo Coming Soon</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ WHAT WE PUT IT ON ══ -->
+<section id="apparel">
+  <div class="apparel-inner">
+    <div class="apparel-left reveal">
+      <div class="eyebrow">The Goods</div>
+      <h2 class="section-title">What We<br><span class="accent-orange">Put It On</span></h2>
+      <p>If you can wear it, chances are we can make it happen. We work with quality wholesale blanks sourced locally — soft, durable, and built to hold a print the way it should.</p>
+      <div class="apparel-note">
+        Don't see what you need? Ask anyway. If we don't have it, we'll tell you straight — and help you find a solution.
+      </div>
+    </div>
+    <div class="apparel-grid reveal reveal-delay-2">
+      <div class="apparel-item">
+        <div class="apparel-item-icon">👕</div>
+        <div>
+          <div class="apparel-item-name">T-Shirts</div>
+          <div class="apparel-item-note">Youth & Adult Sizes</div>
+        </div>
+      </div>
+      <div class="apparel-item">
+        <div class="apparel-item-icon">🧥</div>
+        <div>
+          <div class="apparel-item-name">Hoodies</div>
+          <div class="apparel-item-note">Pullover & Zip-Up</div>
+        </div>
+      </div>
+      <div class="apparel-item">
+        <div class="apparel-item-icon">👚</div>
+        <div>
+          <div class="apparel-item-name">Crop Tops</div>
+          <div class="apparel-item-note">Adult Sizing</div>
+        </div>
+      </div>
+      <div class="apparel-item">
+        <div class="apparel-item-icon">🩱</div>
+        <div>
+          <div class="apparel-item-name">Long Sleeves</div>
+          <div class="apparel-item-note">Youth & Adult Sizes</div>
+        </div>
+      </div>
+      <div class="apparel-item">
+        <div class="apparel-item-icon">👖</div>
+        <div>
+          <div class="apparel-item-name">Joggers</div>
+          <div class="apparel-item-note">Adult Sizing</div>
+        </div>
+      </div>
+      <div class="apparel-item">
+        <div class="apparel-item-icon">🏈</div>
+        <div>
+          <div class="apparel-item-name">Jerseys</div>
+          <div class="apparel-item-note">Sports & Casual</div>
+        </div>
+      </div>
+      <div class="apparel-item">
+        <div class="apparel-item-icon">🎓</div>
+        <div>
+          <div class="apparel-item-name">Varsity Jackets</div>
+          <div class="apparel-item-note">Letter Jackets</div>
+        </div>
+      </div>
+      <div class="apparel-item">
+        <div class="apparel-item-icon">🧶</div>
+        <div>
+          <div class="apparel-item-name">Jean Jackets</div>
+          <div class="apparel-item-note">Adult Sizing</div>
+        </div>
+      </div>
+      <div class="apparel-item">
+        <div class="apparel-item-icon">👔</div>
+        <div>
+          <div class="apparel-item-name">Polos & Uniforms</div>
+          <div class="apparel-item-note">Business Apparel</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ CUSTOM GIFTS ══ -->
+<section id="custom-gifts">
+  <div class="gifts-inner">
+    <div class="gifts-left reveal">
+      <div class="eyebrow">Something Extra</div>
+      <h2 class="section-title">Custom Gifts<br><span class="accent-yellow">Upon Request</span></h2>
+      <p>Apparel is our lane, but sometimes a gift needs something more. We offer <strong>custom drinkware</strong> for those moments when a tee alone won't cut it — think birthdays, bridal parties, corporate events, or just because.</p>
+      <p>Drinkware orders are available upon request and are a perfect add-on to any apparel order.</p>
+      <div class="gifts-badge">✦ Available by Request Only</div>
+    </div>
+    <div class="gifts-right reveal reveal-delay-2">
+      <div class="gift-card">
+        <div class="gift-icon">☕</div>
+        <div class="gift-name">Custom Mugs</div>
+        <div class="gift-desc">Personalized ceramic mugs for any occasion. Perfect gift, every time.</div>
+      </div>
+      <div class="gift-card">
+        <div class="gift-icon">🥤</div>
+        <div class="gift-name">Insulated Cups</div>
+        <div class="gift-desc">Custom tumblers and insulated cups that keep your drinks where they belong.</div>
+      </div>
+      <div class="gift-card" style="grid-column: span 2; display: flex; align-items: center; gap: 20px; text-align: left; padding: 24px;">
+        <div class="gift-icon" style="font-size:1.6rem; flex-shrink:0;">💡</div>
+        <div>
+          <div class="gift-name" style="font-size:0.9rem; margin-bottom: 4px;">Have Something Else in Mind?</div>
+          <div class="gift-desc">Reach out and ask. If we can make it happen, we will.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ OUR WORK ══ -->
+<section id="our-work">
+  <div class="work-header">
+    <div class="reveal">
+      <div class="eyebrow">Our Work</div>
+      <h2 class="section-title">The Work <span class="accent-orange">Speaks</span></h2>
+    </div>
+    <a href="quote.html" class="btn btn-outline reveal reveal-delay-2">Start Your Order</a>
+  </div>
+  <div class="work-grid">
+    <div class="work-item reveal reveal-delay-1">
+      <div class="work-item-inner">
+        <div class="work-placeholder-icon">👕</div>
+        <div class="work-placeholder-text">Custom Apparel</div>
+      </div>
+      <div class="work-overlay">
+        <div class="work-overlay-title">Custom Apparel</div>
+        <div class="work-overlay-sub">Photo Coming Soon</div>
+      </div>
+    </div>
+    <div class="work-item reveal reveal-delay-2">
+      <div class="work-item-inner">
+        <div class="work-placeholder-icon">👥</div>
+        <div class="work-placeholder-text">Group Order</div>
+      </div>
+      <div class="work-overlay">
+        <div class="work-overlay-title">Group Order</div>
+        <div class="work-overlay-sub">Photo Coming Soon</div>
+      </div>
+    </div>
+    <div class="work-item reveal reveal-delay-3">
+      <div class="work-item-inner">
+        <div class="work-placeholder-icon">✨</div>
+        <div class="work-placeholder-text">Your Order Next</div>
+      </div>
+      <div class="work-overlay">
+        <div class="work-overlay-title">What Will Yours Be?</div>
+        <div class="work-overlay-sub">Get a Quote Today</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ CONTACT + CTA ══ -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-left reveal">
+      <div class="eyebrow">Get in Touch</div>
+      <h2 class="section-title">Questions?<br><span class="accent-peri">We're Here.</span></h2>
+      <p>Not sure where to start? Have questions about pricing, turnaround, or what's possible? Reach out — we'll give you a straight answer, no runaround.</p>
+      <div class="contact-socials">
+        <a href="https://instagram.com/remyxdripofficial" target="_blank" class="social-row">
+          <span class="social-platform">Instagram</span>
+          @remyxdripofficial
+        </a>
+        <a href="https://facebook.com/remyxdripofficial" target="_blank" class="social-row">
+          <span class="social-platform">Facebook</span>
+          remyxdripofficial
+        </a>
+        <a href="https://tiktok.com/@ReMyxDripOfficial" target="_blank" class="social-row">
+          <span class="social-platform">TikTok</span>
+          @ReMyxDripOfficial
+        </a>
+      </div>
+    </div>
+    <div class="contact-right reveal reveal-delay-2">
+      <div class="cta-icon">📋</div>
+      <div class="cta-title">Ready to <span class="accent-orange">Order?</span></div>
+      <p class="cta-body">Fill out our quote request form and we'll get back to you within 24–48 hours. No commitment required — just tell us what you're thinking.</p>
+      <a href="quote.html" class="btn btn-solid" style="width:100%; justify-content:center;">Request a Quote</a>
+      <div class="cta-note">Have questions first? Slide into our DMs — we don't bite.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">RE<span>MYX</span> DRIP</div>
+    <div class="footer-tagline">Be True. Be You. | Originality Over Imitation</div>
+  </div>
+  <ul class="footer-links">
+    <li><a href="#services-intro">Services</a></li>
+    <li><a href="#who-we-serve">Who We Serve</a></li>
+    <li><a href="#apparel">Apparel</a></li>
+    <li><a href="#our-work">Our Work</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="merch.html">Merch</a></li>
+    <li><a href="quote.html">Get a Quote</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 ReMyx Drip. All rights reserved.</div>
+</footer>
+
+<script>
+  // Back to top
+  window.addEventListener('scroll', () => {
+    const btn = document.getElementById('backTop');
+    btn.classList.toggle('visible', window.scrollY > 500);
+  });
+
+  // Scroll reveal
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>
